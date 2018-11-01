@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mount-by-init-containers
+  labels:
+    app: myapp
+spec:
+  containers:
+  - name: app-main
+    image: busybox
+    imagePullPolicy: IfNotPresent
+    command: ['sh', '-c', 'cat /tmp/hello/hello']
+    volumeMounts:
+      - mountPath: /tmp/hello
+        name: hello-dir
+  initContainers:
+  - name: app-mounter
+    image: fuse-hello:latest
+    imagePullPolicy: IfNotPresent
+    command: ['sh', '-c', './hello /tmp/hello']
+    volumeMounts:
+      - mountPath: /tmp/hello
+        name: hello-dir
+    securityContext:
+      privileged: true
+      capabilities:
+        add:
+          - SYS_ADMIN
+  volumes:
+    - name: hello-dir
+      emptyDir: {}
