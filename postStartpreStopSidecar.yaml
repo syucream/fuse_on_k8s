@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: mount-by-init-containers
+  name: mount-by-sidecar
   labels:
     app: myapp
 spec:
