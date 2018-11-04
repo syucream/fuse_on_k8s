@@ -22,9 +22,6 @@ spec:
         name: hello-dir
     securityContext:
       privileged: true
-      capabilities:
-        add:
-          - SYS_ADMIN
   volumes:
     - name: hello-dir
       emptyDir: {}
